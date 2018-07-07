@@ -1,6 +1,6 @@
 @extends('layout') @section('title') Wellcome @endsection @section('content')
  
- <form method="post" action="{{ action('TaskController@update') }}">
+ <form method="post" action="">
      {{csrf_field()}}
      <div class="form-row">
          <div class="col-md-8 mb-3">
@@ -38,7 +38,6 @@
      </div>
      <div class="row">
          <!-- This action will route to the controller -->
-         <!-- <a class="btn" href="{{ action('TaskController@delete') }}">Delete</a> -->
          
          <input type="hidden" id="custId" name="custId" value="{{$task->id}}">
          <button class="btn btn-primary" type="submit"> Save</button>

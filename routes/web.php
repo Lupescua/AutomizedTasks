@@ -16,4 +16,3 @@ Route::get('/', 'TaskController@index');
 Route::post('/tasks', 'TaskController@store') ;
 Route::get('/tasks', 'TaskController@show_all') ;
 Route::get('/tasks/{id}', 'TaskController@show') ;
-// Route::post('/tasks/{id}', 'TaskController@update') ;

@@ -1,7 +1,8 @@
 @extends('layout') @section('title') Tasks List @endsection @section('content')
 
 <!--content -->
-<form action="{{ action('TaskController@update') }}" method="post">
+<form >
+    {{csrf_field()}}
 <table class="table table-dark">
     <thead>
         <tr>
