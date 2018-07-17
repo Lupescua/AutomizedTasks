@@ -26,18 +26,6 @@ class TaskController extends Controller
     {
         
 
-        // User::create('task', function (Blueprint $table) { 
-        //     $table->increments('id');
-        //     $table->string('name');
-        //     $table->text('description');
-        //     $table->string('responsible');
-        //     $table->string('deadline');
-        //     $table->boolean('completed');
-        //     $table->timestamps();
-        //  });
-
-
-        // return redirect(action('UserController@store'));
     }
 
     /**
@@ -48,17 +36,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        
-            $task =  new Task();
-            $task->name = $request->name;
-            $task->description = $request->description;
-            $task->responsible = $request->responsible;
-            $task->deadline = $request->deadline;
-            $task->completed = 0;
-            $task->save();
-
-            //redirect to show_all page
-            return redirect(action('TaskController@show_all'));
+        $this->validate(request(),[
+            'name'=>'required',
+            'description'=>'required',
+            'responsible'=>'required',
+            'deadline'=>'required',
+        ]);
+        Task::create(request(['name','description','responsible','deadline']));
+        //redirect to show_all page
+        return redirect(action('TaskController@show_all'));
     }
 
     /**
@@ -67,7 +53,9 @@ class TaskController extends Controller
      */
     public function show_all()
     {
-        $tasks = Task::all();
+        //show all in descending order
+        $tasks = Task::orderBy('created_at','desc')->get();
+        
         return view('tasks_list',compact('tasks'));
 
     }
@@ -79,8 +67,7 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        
+    {        
         $task = Task::find($id);
         return view('task',compact('task'));
 
@@ -104,10 +91,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
-    {
-        $tasks = Task::where('id', $id);
-        $tasks->update($request->all());
+    public function update()
+    {        
+        $task = Task::find($id);
         $task->completed = 0;
         $task->save();
         return view('task',compact('task'));
@@ -124,4 +110,6 @@ class TaskController extends Controller
     {
         //
     }
+
+
 }

@@ -1,23 +1,25 @@
- @extends('layout') @section('title') Wellcome @endsection @section('content')
- 
+ @extends('layouts/layout') @section('title') Wellcome @endsection @section('content')
+
 <form method="post" action="{{ action('TaskController@store') }}">
     {{csrf_field()}}
     <div class="form-row">
         <div class="col-md-8 mb-3">
             <div class="form-group">
-                <input name="name" type="text" class="form-control" id="validationDefault01" placeholder="Name of Task" value="">
+                <label for="name">Task Name</label>
+                <input name="name" type="text" class="form-control" id="name" placeholder="Task Name">
 
             </div>
         </div>
         <div class="col-md-8 mb-3">
             <div class="form-group">
-                <textarea name="description" type="text" class="form-control" id="validationDefault01" placeholder="Task Description" value=""></textarea>
-
+                <label for="description">Task Description</label>
+                <textarea name="description" type="text" class="form-control" id="description" placeholder="Task Description"></textarea>
             </div>
         </div>
         <div class="col-md-8 mb-3">
             <div class="form-group">
-                <input name="responsible" type="text" class="form-control" id="validationDefault01" placeholder="Task Responsible" value="">
+                <label for="responsible">Task Responsible</label>
+                <input name="responsible" type="text" class="form-control" id="responsible" placeholder="Task Responsible">
 
             </div>
         </div>
@@ -30,9 +32,13 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <!-- This action will route to the controller -->
-        <button class="btn btn-primary" type="submit"> Save</button>
+    <div class="form-group">
+        <div class="row">
+            <!-- This action will route to the controller -->
+            <button class="btn btn-primary offset-sm-7" type="submit"> Save</button>
+        </div>
     </div>
+    @include ('layouts.errors')
 </form>
+
 @endsection

@@ -11,8 +11,19 @@
 |
 */
 
-Route::get('/', 'TaskController@index');
+Route::get('/create', 'TaskController@index');
+Route::post('/', 'TaskController@store') ;
 
-Route::post('/tasks', 'TaskController@store') ;
-Route::get('/tasks', 'TaskController@show_all') ;
-Route::get('/tasks/{id}', 'TaskController@show') ;
+Route::get('/', 'TaskController@show_all') ;
+Route::get('/tasks/{task}', 'TaskController@show') ;
+// Route::patch('/tasks/{id}', 'TaskController@update') ;
+// Route::delete('/tasks/{id}', 'TaskController@delete') ;
+
+Route::post('/tasks/{task}/comments','CommentController@store');
+// Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/login','SessionsController@create');
+Route::get('/register','RegistrationController@create');
+

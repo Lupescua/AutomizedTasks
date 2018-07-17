@@ -27,10 +27,19 @@
 </head>
 
 <body>
-<div class="container">
-    @yield('content')
-</div>
+    @include ('layouts.nav')
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 offset-sm-1 blog-sidebar">
+                <h1>Table</h1>
+                @yield('content')
+            </div>
 
+            @include ('layouts.sidebar')
+        </div>
+    </div>
+
+    @include ('layouts.footer')
 </body>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
