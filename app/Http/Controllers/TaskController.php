@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
@@ -14,7 +15,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-            return view('welcome');
+        
+        return view('welcome');
     }
 
     /**
@@ -42,7 +44,20 @@ class TaskController extends Controller
             'responsible'=>'required',
             'deadline'=>'required',
         ]);
-        Task::create(request(['name','description','responsible','deadline']));
+        auth()->user()->publish(
+            new Task(request(['name','description','responsible','deadline']))
+        );
+
+        // I moved the create in the Model
+        // Task::create([
+        //     'name' => request('name'),
+        //     'description' => request('description'),
+        //     'responsible' => request('responsible'),
+        //     'deadline' => request('deadline'),
+        //     'user_id' => auth()->id()
+        //     ]);
+
+        
         //redirect to show_all page
         return redirect(action('TaskController@show_all'));
     }
@@ -54,9 +69,25 @@ class TaskController extends Controller
     public function show_all()
     {
         //show all in descending order
-        $tasks = Task::orderBy('created_at','desc')->get();
-        
+        // $tasks = Task::orderBy('created_at','desc')->get();
+
+        $tasks = Task::latest();
+    
+        if($month = request('month')){
+            $tasks->whereMonth('created_at',Carbon::parse($month)->month);
+        }
+        if($year = request('year')){
+            $tasks->whereYear('created_at',Carbon::parse($year)->year);
+        }
+
+        $tasks = $tasks->get();
+
+        // $archives = Task::archives();
+        // return view('tasks_list',compact('tasks','archives'));
+        // I did not use this method because I used the App\Providers\AppServiceProvider.php
+     
         return view('tasks_list',compact('tasks'));
+
 
     }
 

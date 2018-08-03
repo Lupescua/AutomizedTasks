@@ -30,4 +30,10 @@ class User extends Authenticatable
     public function tasks(){
         return $this->hasMany(Task::class);
     }
+
+    public function publish( Task $task){
+        $this->tasks()->save($task);
+
+        //I used save instead of create. If I would have used create, I would have had to write the template. But since we already have it, save is enough.
+    }
 }

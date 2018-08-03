@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $fillable = [
-        'name', 'description', 'responsible','deadline','completed'
+        'name', 'user_id', 'description', 'responsible','deadline','completed'
     ];
 
     public static function scopeIncomplete()
@@ -31,5 +31,13 @@ class Task extends Model
         //     'body'=>$body,
         //     'task_id'=>$this->id
         // ]);
+    }
+    public static function archives()
+    {
+        return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')->
+        groupBy('year','month')->
+        orderByRaw('min(created_at) desc')->
+        get()
+        ->toArray();
     }
 }
