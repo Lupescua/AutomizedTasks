@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use Carbon\Carbon;
+use App\Repositories\Tasks;
+use App\Http\Requests\RegistrationForm;
 
 class TaskController extends Controller
 {
+    public function __construct()  
+    {
+        
+    $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -38,6 +45,8 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+      
+
         $this->validate(request(),[
             'name'=>'required',
             'description'=>'required',
@@ -48,6 +57,8 @@ class TaskController extends Controller
             new Task(request(['name','description','responsible','deadline']))
         );
 
+        sessions()->flash('message','Your task has been created');
+        
         // I moved the create in the Model
         // Task::create([
         //     'name' => request('name'),
@@ -66,11 +77,13 @@ class TaskController extends Controller
      * Show a list of all elements in storage.
      *
      */
-    public function show_all()
+    public function show_all(Tasks $tasks )
     {
+        // dd($tasks);
         //show all in descending order
         // $tasks = Task::orderBy('created_at','desc')->get();
-
+        // $tasks = (new \App\Repositories\Tasks)->all();
+        
         $tasks = Task::latest();
     
         if($month = request('month')){
@@ -129,6 +142,7 @@ class TaskController extends Controller
         $task->save();
         return view('task',compact('task'));
 
+        sessions()->flash('message','Your task has been updated');
     }
 
     /**

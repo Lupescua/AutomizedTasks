@@ -1,5 +1,8 @@
 <?php
 
+
+// dd(App::make('App\Billing\Stripe'));
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +19,8 @@ Route::post('/', 'TaskController@store') ;
 
 Route::get('/', 'TaskController@show_all');
 Route::get('/tasks/{task}', 'TaskController@show') ;
+
+Route::get('/tasks/tags/{tag}', 'TagsController@index') ;
 // Route::patch('/tasks/{id}', 'TaskController@update') ;
 // Route::delete('/tasks/{id}', 'TaskController@delete') ;
 

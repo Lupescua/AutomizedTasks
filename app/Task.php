@@ -40,4 +40,9 @@ class Task extends Model
         get()
         ->toArray();
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }

@@ -22,9 +22,9 @@ class SessionsController extends Controller
 
         if (! auth()->attempt(request(['email','password'])))
         {
-return back()->withErrors([
-    'message'=>'please check your credentials'
-]);
+            return back()->withErrors([
+                'message'=>'please check your credentials'
+            ]);
         }
 
         // If not, redirect back

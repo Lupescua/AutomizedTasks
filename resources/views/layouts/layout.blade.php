@@ -28,6 +28,13 @@
 
 <body>
     @include ('layouts.nav')
+
+    @if ($flash = session('message'))
+        <div class="alert alert-success" role="alert">
+        {{$flash}}
+        </div>
+    @endif
+
     <div class="container">
         <div class="row">
             <div class="col-sm-7 offset-sm-1 blog-sidebar">
