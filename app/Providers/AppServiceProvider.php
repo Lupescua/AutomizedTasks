@@ -17,8 +17,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts.sidebar',function($view){
-            $view->with('archives', Task::archives());
-            $view->with('tags', Tag::pluck('name'));
+            $archives = Task::archives();
+            $tags = Tag::has('tasks')->pluck('name');
+
+            $view->with(compact('archives','tags'));
         });
         //Every time I use the sidebar this function gets called
     }

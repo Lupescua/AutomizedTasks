@@ -50,6 +50,16 @@
         <button class="btn btn-primary" type="submit"> Save</button>
     </div>
 </form>
+    @if (count($task->tags))
+        <ul>
+            @foreach ($task->tags as $tag)
+                <li>
+                <a href="/tasks/tags/{{$tag->name}}"></a>
+                {{$tag->name}}
+                </li>
+            @endforeach
+        </ul>
+    @endif
 <div class="comments">
     @foreach($task->comments as $comment)
     <li class="list-group-item">
